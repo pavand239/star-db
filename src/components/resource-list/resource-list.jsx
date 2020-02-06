@@ -4,6 +4,7 @@ import SwapiService from "../../services/swapi-service";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 
+
 export default class ResourceList extends React.Component {
     swapi=new SwapiService();
     state = {
@@ -15,6 +16,11 @@ export default class ResourceList extends React.Component {
         this.setState({
             resourceList:loadedList,
             isLoading:false
+        });
+    }
+    onError = (err) => {
+        this.setState({
+            error:true
         });
     }
     loadList = async () =>{
@@ -33,7 +39,18 @@ export default class ResourceList extends React.Component {
         );
     }
     componentDidMount() {
-        this.loadList().then(this.onListLoaded);
+        this.loadList().then(this.onListLoaded).catch(this.onError);
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.resource !== this.props.resource) {
+            this.setState({
+                resourceList:[],
+                isLoading:true,
+                error:false
+            })
+            this.loadList().then(this.onListLoaded).catch(this.onError);
+        }
+
     }
     render(){
         let {resourceList, isLoading,error} = this.state,
@@ -45,12 +62,11 @@ export default class ResourceList extends React.Component {
                     <ListGroup.Item 
                         key = {item.id}
                         onClick = {()=>{this.onSelectListItem(item.id)}}>
-                        {item.name}
+                        {item.name.value}
                     </ListGroup.Item>
                     ));
                 list = <ListGroup>{listItems}</ListGroup>;
             }
-            console.log(resourceList);
         return (
             <Card className='bg-dark rounded mb-3'>
                 {spinner}

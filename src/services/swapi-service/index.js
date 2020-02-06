@@ -8,27 +8,27 @@ export default class SwapiService {
         }
         return await res.json();
     }
-    async getAllPeople(page=1) {
+    getAllPeople = async (page=1) => {
         let people = await this.getResource(`/people/?page=${page}`);
         return people.results.map(this._transformPerson);
     }
-    async getPerson (id) {
+    getPerson = async (id) => {
         let person = await this.getResource(`/people/${id}/`);
         return this._transformPerson(person);
     }
-    async getAllPlanets(page=1) {
+    getAllPlanets = async (page=1) => {
         let planets = await this.getResource(`/planets/?page=${page}`);
         return planets.results.map(this._transformPlanet);
     }
-    async getPlanet(id) {
+    getPlanet = async (id) => {
         let planet = await this.getResource(`/planets/${id}/`);
         return this._transformPlanet(planet);
     }
-    async getAllStarships(page=1) {
+    getAllStarships = async (page=1) => {
         let starships = await this.getResource(`/starships/?page=${page}`);
         return starships.results.map(this._transformStarship);
     }
-    async getStarship(id) {
+    getStarship = async(id) => {
         let starship = await this.getResource(`/starships/${id}/`);
         return this._transformStarship(starship);
     }
@@ -36,31 +36,40 @@ export default class SwapiService {
         const regExp=/\/([0-9]*)\/$/;
         return item.url.match(regExp)[1];
     }
+    _addName(paramName,paramValue){ //add name to parameter, return object {value, name}
+        return {
+            value: paramValue,
+            name: paramName
+        }
+    }
     _transformPlanet=(planet)=>{
         return {
             id:this._extractId(planet),
-            name:planet.name,
-            population: planet.population,
-            rotationPeriod:planet.rotation_period,
-            diameter:planet.diameter
+            imageBaseUrl:`https://starwars-visualguide.com/assets/img/planets/`,
+            name:this._addName('Name', planet.name),
+            params:[this._addName('Population', planet.population),
+                    this._addName("Rotation period", planet.rotation_period),
+                    this._addName('Diameter', planet.diameter)]
         }
     }
     _transformPerson=(person)=>{
         return {
             id:this._extractId(person),
-            name:person.name,
-            gender: person.gender,
-            birthYear:person.birth_year,
-            hairColor:person.hair_color
+            imageBaseUrl:`https://starwars-visualguide.com/assets/img/characters/`,
+            name:this._addName('Name',person.name),
+            params:[this._addName('Gender',person.gender),
+                    this._addName('Birth Year', person.birth_year),
+                    this._addName('Hair color',person.hair_color)]
         }
     }
     _transformStarship=(starship)=>{
         return {
             id:this._extractId(starship),
-            name:starship.name,
-            model:starship.model,
-            manufacturer:starship.manufacturer,
-            cost:starship.cost_in_credits
+            imageBaseUrl:`https://starwars-visualguide.com/assets/img/starships/`,
+            name:this._addName('Name',starship.name),
+            params:[this._addName('Model',starship.model),
+                    this._addName('Manufacturer',starship.manufacturer),
+                    this._addName('Cost', starship.cost_in_credits)]
         }
     }
 

@@ -11,7 +11,6 @@ export default class StarDBApp extends React.Component {
     swapi=new SwapiService();
     state ={
         showRandomBlock:true,
-        resource:'starships'
     }
 
     handlerOnCloseRandomBlock = () => {
@@ -21,15 +20,26 @@ export default class StarDBApp extends React.Component {
     }
     
     render() {
-        let {showRandomBlock, resource} = this.state;
+        let {showRandomBlock} = this.state;
         return (
             <Router>
                 <Layout>
+                    <Header />
+                    {showRandomBlock?
+                        <RandomBlock 
+                            onClose={this.handlerOnCloseRandomBlock}
+                            getData={this.swapi.getPlanet} />
+                        :null}
                     <Switch>
-                        <Route path='/'>
-                            <Header />
-                            {showRandomBlock?<RandomBlock onClose={this.handlerOnCloseRandomBlock}  />:null}
-                            <Content resource ={resource}/>
+                        
+                        <Route exact path='/'>
+                            <Content resource ={'people'}/>
+                        </Route>
+                        <Route exact path='/planets'>
+                            <Content resource ={'planets'}/>
+                        </Route>
+                        <Route exact path='/starships'>
+                            <Content resource ={'starships'}/>
                         </Route>
                     </Switch>
                 </Layout>

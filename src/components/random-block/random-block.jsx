@@ -1,18 +1,19 @@
 import React from "react";
 import {Jumbotron} from "react-bootstrap";
 import Spinner from "../spinner";
-import PlanetDetail from "../planet-detail";
+import ResourceDetail from "../resource-detail";
 import ErrorIndicator from "../error-indicator";
-import SwapiService from "../../services/swapi-service";
 import './random-block.css';
 
 export default class RandomBlock extends React.Component {
-    swapi = new SwapiService();
     
     state = {
-        planet:{},
+        item:{},
         isLoading:true,
         error:false
+    }
+    componentDidCatch(){
+        this.onError();
     }
     componentDidMount() {
         this.interval = setInterval(this.updateBlock,6000);
@@ -20,29 +21,30 @@ export default class RandomBlock extends React.Component {
     componentWillUnmount(){
         clearInterval(this.interval);
     }
-    onPlanetLoaded = (planet) => {
+    onItemLoaded = (item) => {  //handler for update state after loading item
         this.setState({
-            planet,
+            item:item,
             isLoading:false
         });
     }
-    onError = (err) => {
+    onError = (err) => { //handler for Fetch error
         this.setState({
             error:true
         });
     }
     updateBlock=()=> {
-        let id = Math.ceil(Math.random()*100%61);     
-        this.swapi.getPlanet(id).then(this.onPlanetLoaded).catch(this.onError);
-        console.log('update');
+        let id = Math.ceil(Math.random()*100%61),
+            {getData} = this.props;     
+        getData(id).then(this.onItemLoaded).catch(this.onError);
     }
 
+
     render() {
-        let {planet, isLoading, error} = this.state,
+        let {item, isLoading, error} = this.state,
             {onClose} = this.props,
             spinner = isLoading && !error?<Spinner />:null,
             errorIndicator = error?<ErrorIndicator />:null,
-            planetContent = !isLoading && !error?<PlanetDetail {...planet}/>:null;
+            planetContent = !isLoading && !error?<ResourceDetail item={item}/>:null;
         return (
             <Jumbotron bg='dark' className='d-flex my-3 justify-content-between'>
                {spinner}
