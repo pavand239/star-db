@@ -36,41 +36,34 @@ export default class SwapiService {
         const regExp=/\/([0-9]*)\/$/;
         return item.url.match(regExp)[1];
     }
-    _addName(paramName,paramValue){ //add name to parameter, return object {value, name}
-        return {
-            value: paramValue,
-            name: paramName
-        }
-    }
-    // key params is array for display in resource detail
     _transformPlanet=(planet)=>{
         return {
             id:this._extractId(planet),
             imageBaseUrl:`https://starwars-visualguide.com/assets/img/planets/`,
-            name:this._addName('Name', planet.name),
-            params:[this._addName('Population', planet.population),
-                    this._addName("Rotation period", planet.rotation_period),
-                    this._addName('Diameter', planet.diameter)]
+            name:planet.name,
+            population: planet.population,
+            rotationPeriod:planet.rotation_period,
+            diameter:planet.diameter
         }
     }
     _transformPerson=(person)=>{
         return {
             id:this._extractId(person),
             imageBaseUrl:`https://starwars-visualguide.com/assets/img/characters/`,
-            name:this._addName('Name',person.name),
-            params:[this._addName('Gender',person.gender), 
-                    this._addName('Birth Year', person.birth_year),
-                    this._addName('Hair color',person.hair_color)]
+            name:person.name,
+            gender: person.gender,
+            birthYear:person.birth_year,
+            hairColor:person.hair_color
         }
     }
     _transformStarship=(starship)=>{
         return {
             id:this._extractId(starship),
             imageBaseUrl:`https://starwars-visualguide.com/assets/img/starships/`,
-            name:this._addName('Name',starship.name),
-            params:[this._addName('Model',starship.model),
-                    this._addName('Manufacturer',starship.manufacturer),
-                    this._addName('Cost', starship.cost_in_credits)]
+            name:starship.name,
+            model:starship.model,
+            manufacturer:starship.manufacturer,
+            cost:starship.cost_in_credits
         }
     }
 

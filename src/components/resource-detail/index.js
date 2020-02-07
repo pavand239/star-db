@@ -1,2 +1,3 @@
-import {ResourceDetail} from './resource-detail';
+import {ResourceDetail , Render} from './resource-detail';
 export default ResourceDetail;
+export {Render};
