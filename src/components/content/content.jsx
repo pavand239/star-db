@@ -8,10 +8,21 @@ import SwapiService from "../../services/swapi-service";
 
 export default class Content extends React.Component {
     swapi = new SwapiService();
-    getDataFunctions={
-        'people':this.swapi.getAllPeople,
-        'planets':this.swapi.getAllPlanets,
-        'starships':this.swapi.getAllStarships
+    resourceFunctions={                         
+        // object contain functions to get data from api
+        // and render-function for list for each resource
+        'people':{getData:this.swapi.getAllPeople,
+                  selectListItemValue:({name,params:[birthYear,gender]})=>(
+                      `${name.value} (${gender.value}, ${birthYear.value})`
+                    )},
+        'planets':{getData:this.swapi.getAllPlanets,
+                   selectListItemValue:({name,params:[population]})=>(
+                        `${name.value} (Population: ${population.value})`
+                    )},
+        'starships':{getData:this.swapi.getAllStarships,
+                     selectListItemValue:({name,params:[manufacturer]})=>(
+                        `${name.value} ( ${manufacturer.value})`
+                    )},
     }
     state = {
         getData:null,
@@ -46,7 +57,7 @@ export default class Content extends React.Component {
         let {resource} = this.props,
             {selectedItem, error} = this.state,
             resourceDetail = this.selectDetailView(selectedItem),
-            getData=this.getDataFunctions[resource];
+            {getData, selectListItemValue}=this.resourceFunctions[resource];
             
         if (error) {
             return (
@@ -61,7 +72,8 @@ export default class Content extends React.Component {
                     <Col md={4}>
                         <ResourceList resource={resource}
                                     onSelectItem = {this.handlerOnSelectItem}
-                                    getData={getData} />
+                                    getData={getData}
+                                    selectListItemValue={selectListItemValue} />
                     </Col>
                     <Col md={8}>
                         <Jumbotron className='bg-dark rounded d-flex '>  

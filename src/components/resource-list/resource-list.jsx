@@ -58,13 +58,15 @@ export default class ResourceList extends React.Component {
             errorIndicator = error?<ErrorIndicator />:null,
             list = null;
             if (!isLoading && !error){
-                let listItems = resourceList.map((item) => (
-                    <ListGroup.Item 
-                        key = {item.id}
-                        onClick = {()=>{this.onSelectListItem(item.id)}}>
-                        {item.name.value}
-                    </ListGroup.Item>
-                    ));
+                let listItems = resourceList.map((item) => {
+                    let value=this.props.selectListItemValue(item);
+                    return (
+                        <ListGroup.Item 
+                            key = {item.id}
+                            onClick = {()=>{this.onSelectListItem(item.id)}}>
+                            {value}
+                        </ListGroup.Item>
+                    )});
                 list = <ListGroup>{listItems}</ListGroup>;
             }
         return (

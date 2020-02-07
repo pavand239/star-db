@@ -42,6 +42,7 @@ export default class SwapiService {
             name: paramName
         }
     }
+    // key params is array for display in resource detail
     _transformPlanet=(planet)=>{
         return {
             id:this._extractId(planet),
@@ -57,7 +58,7 @@ export default class SwapiService {
             id:this._extractId(person),
             imageBaseUrl:`https://starwars-visualguide.com/assets/img/characters/`,
             name:this._addName('Name',person.name),
-            params:[this._addName('Gender',person.gender),
+            params:[this._addName('Gender',person.gender), 
                     this._addName('Birth Year', person.birth_year),
                     this._addName('Hair color',person.hair_color)]
         }
