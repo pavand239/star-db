@@ -1,15 +1,14 @@
 import React from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
-export const ResourceList = ({data, selectListItemValue, onSelectItem}) => {
+export const ResourceList = ({data, children, onSelectItem}) => {
     let list = null,
         listItems = data.map((item) => {
-            let value=selectListItemValue(item);
             return (
                 <ListGroup.Item 
                     key = {item.id}
                     onClick = {()=>{onSelectItem(item.id)}}>
-                    {value}
+                    {children(item)}
                 </ListGroup.Item>
             )});
     list = <ListGroup>{listItems}</ListGroup>;

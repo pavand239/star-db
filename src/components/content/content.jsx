@@ -67,19 +67,41 @@ export default class Content extends React.Component {
         }
         
         return (
-            <Row bg={'dark'} className="mt-3">
+            <div>
+                <Row bg={'dark'} className="mt-3">
+                        <Col md={4}>
+                            <PlanetsList onSelectItem = {this.handlerOnSelectItem}/>
+                        </Col>
+                        <Col md={8}>
+                            <Jumbotron className='bg-dark rounded d-flex '>  
+                                {itemId===null?<h4>Select item from list</h4>:
+                                <PlanetDetail id={itemId} />}
+                            </Jumbotron>
+                    </Col>
+                </Row>
+                <Row bg={'dark'} className="mt-3">
                     <Col md={4}>
-                        <PlanetsList 
-                                    onSelectItem = {this.handlerOnSelectItem}
-                                    selectListItemValue={(item)=>`${item.name}`} />
+                        <PeopleList onSelectItem = {this.handlerOnSelectItem}/>
                     </Col>
                     <Col md={8}>
                         <Jumbotron className='bg-dark rounded d-flex '>  
                             {itemId===null?<h4>Select item from list</h4>:
-                            <PlanetDetail id={itemId} />}
+                            <PersonDetail id={itemId} />}
                         </Jumbotron>
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+                <Row bg={'dark'} className="mt-3">
+                    <Col md={4}>
+                        <StarshipsList onSelectItem = {this.handlerOnSelectItem}/>
+                    </Col>
+                    <Col md={8}>
+                        <Jumbotron className='bg-dark rounded d-flex '>  
+                            {itemId===null?<h4>Select item from list</h4>:
+                            <StarshipDetail id={itemId} />}
+                        </Jumbotron>
+                    </Col>
+                </Row>
+            </div>
         )
     }
 }
