@@ -2,8 +2,11 @@ import React from "react";
 import Layout from '../layout';
 import Header from '../header';
 import RandomBlock from '../random-block';
-import Content from '../content';
 import ErrorBoundry from '../error-boundry';
+import {
+    PeoplePage,
+    PlanetPage,
+    StarshipPage } from "../pages"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SwapiService from "../../services/swapi-service";
 import {SwapiServiceProvider} from "../swapi-service-context";
@@ -38,13 +41,13 @@ export default class StarDBApp extends React.Component {
                             <Switch>
                                 
                                 <Route exact path='/'>
-                                    <Content resource ={'people'}/>
+                                    <PeoplePage />
                                 </Route>
                                 <Route exact path='/planets'>
-                                    <Content resource ={'planets'}/>
+                                    <PlanetPage />
                                 </Route>
                                 <Route exact path='/starships'>
-                                    <Content resource ={'starships'}/>
+                                    <StarshipPage/>
                                 </Route>
                             </Switch>
                         </ErrorBoundry>
