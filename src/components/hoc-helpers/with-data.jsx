@@ -2,7 +2,7 @@ import React from "react";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 
-export const withData = (View, getData) => {
+export const withData = (Wrapped) => {
     return class extends React.Component {
         state = {
             data:null,
@@ -31,7 +31,7 @@ export const withData = (View, getData) => {
             if (error) {
                 return <ErrorIndicator />
             }
-            return <View {...this.props} data={data} />
+            return <Wrapped {...this.props} data={data} />
         }
     }
 }
