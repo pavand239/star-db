@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, ListGroup } from "react-bootstrap";
+import ErrorBoundry from "../error-boundry";
 
 export const ResourceList = ({data, children, onSelectItem}) => {
     let list = null,
@@ -14,7 +15,9 @@ export const ResourceList = ({data, children, onSelectItem}) => {
     list = <ListGroup>{listItems}</ListGroup>;
     return (
         <Card className='bg-dark rounded mb-3'>
-            {list}
+            <ErrorBoundry>
+                {list}
+            </ErrorBoundry>
         </Card>
         )
 }

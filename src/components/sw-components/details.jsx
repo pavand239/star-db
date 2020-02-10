@@ -1,43 +1,47 @@
 import React from "react";
-import SwapiService from "../../services/swapi-service";
 import ResourceDetail, {Render} from "../resource-detail";
-
-const swapi=new SwapiService();
-
-const {
-    getPerson,
-    getPlanet,
-    getStarship
-} = swapi;
+import {SwapiServiceConsumer} from "../swapi-service-context";
 
 const PersonDetail = ({id}) => {
     return  (
-        <ResourceDetail itemId={id}
-            getData={getPerson}>
-            <Render field='gender' label='Gender' />
-            <Render field='birthYear' label='Birth Year' />
-            <Render field='hairColor' label='Hair Color' />
-        </ResourceDetail>
+        <SwapiServiceConsumer>
+            {({getPerson}) => (
+                <ResourceDetail itemId={id}
+                    getData={getPerson}>
+                    <Render field='gender' label='Gender' />
+                    <Render field='birthYear' label='Birth Year' />
+                    <Render field='hairColor' label='Hair Color' />
+                </ResourceDetail>
+            )}
+        </SwapiServiceConsumer>
         )
 }
 const PlanetDetail = ({id}) => {
     return  (
-        <ResourceDetail itemId={id}
-            getData={getPlanet}>
-            <Render field='population' label='Population' />
-            <Render field='rotationPeriod' label='Rotation Period' />
-            <Render field='diameter' label='Diametet' />
-        </ResourceDetail>
+        <SwapiServiceConsumer>
+            {({getPlanet}) => (
+                <ResourceDetail itemId={id}
+                    getData={getPlanet}>
+                    <Render field='population' label='Population' />
+                    <Render field='rotationPeriod' label='Rotation Period' />
+                    <Render field='diameter' label='Diametet' />
+                </ResourceDetail>
+            )}
+        </SwapiServiceConsumer>
         )
 }
 const StarshipDetail = ({id}) => {
     return  (
-        <ResourceDetail itemId={id}
-            getData={getStarship}>
-            <Render field='model' label='Model' />
-            <Render field='manufacturer' label='Manufacturer' />
-            <Render field='cost' label='Cost' />
-        </ResourceDetail>
+        <SwapiServiceConsumer>
+            {({getStarship}) => (
+                <ResourceDetail itemId={id}
+                    getData={getStarship}>
+                    <Render field='model' label='Model' />
+                    <Render field='manufacturer' label='Manufacturer' />
+                    <Render field='cost' label='Cost' />
+                </ResourceDetail>
+            )}
+        </SwapiServiceConsumer>
         )
 }
 

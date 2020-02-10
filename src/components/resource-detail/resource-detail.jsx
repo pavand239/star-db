@@ -1,6 +1,7 @@
 import React from "react";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
+import ErrorBoundry from "../error-boundry";
 
 export const Render = (props) => {
     let {item, field, label} = props;
@@ -54,20 +55,22 @@ export class  ResourceDetail extends React.Component {
         }
         let {id, name, imageBaseUrl} = item;
         return(
-            <div className='d-flex'>
-                <img src={`${imageBaseUrl}${id}.jpg`}  
-                    className='rounded mr-lg-5 mr-3'  alt={name}/>
-                <div>
-                    <h3>{name}</h3>
-                    <table className='table table-hover'>
-                        <tbody>
-                            {React.Children.map(this.props.children, (child)=>(
-                                React.cloneElement(child, { item })
-                            ))}
-                        </tbody>
-                    </table>
+            <ErrorBoundry>
+                <div className='d-flex'>
+                    <img src={`${imageBaseUrl}${id}.jpg`}  
+                        className='rounded mr-lg-5 mr-3'  alt={name}/>
+                    <div>
+                        <h3>{name}</h3>
+                        <table className='table table-hover'>
+                            <tbody>
+                                {React.Children.map(this.props.children, (child)=>(
+                                    React.cloneElement(child, { item })
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </ErrorBoundry>
             )
     }
 }

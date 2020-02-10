@@ -9,7 +9,6 @@ import {
     StarshipsList
     } from '../sw-components'
 import "./content.css";
-import ErrorIndicator from "../error-indicator";
 import SwapiService from "../../services/swapi-service";
 
 export default class Content extends React.Component {
@@ -33,7 +32,6 @@ export default class Content extends React.Component {
     state = {
         getData:null,
         itemId:null,
-        error:false
     }
     handlerOnSelectItem=(id)=>{
         this.setState({
@@ -48,24 +46,11 @@ export default class Content extends React.Component {
             })
         }
     }
-    componentDidCatch(){
-        this.setState({
-            error:true
-        });
-    }
     render() {
         let {resource} = this.props,
-            {itemId, error} = this.state;
+            {itemId} = this.state;
             // {getData, selectListItemValue}=this.resourceFunctions[resource];
             
-        if (error) {
-            return (
-                <Jumbotron className='bg-dark mt-3 rounded d-flex' >
-                    <ErrorIndicator />
-                </Jumbotron>
-            )
-        }
-        
         return (
             <div>
                 <Row bg={'dark'} className="mt-3">
