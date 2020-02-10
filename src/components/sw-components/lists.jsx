@@ -1,15 +1,9 @@
 import React from "react"
-import SwapiService from "../../services/swapi-service";
+
 import ResourceList from "../resource-list";
-import {withData} from "../hoc-helpers";
+import {withData, withSwapiService} from "../hoc-helpers";
 
-const swapi=new SwapiService();
 
-const {
-    getAllPeople,
-    getAllPlanets,
-    getAllStarships
-} = swapi;
 const withListItemName = (List, listItemNameRender) => (
     (props) => (
         <List {...props}>
@@ -20,14 +14,32 @@ const withListItemName = (List, listItemNameRender) => (
 
 const renderName=(item)=>`${item.name}`;
 const renderStarshipListItemName = (item)=>`${item.name} (${item.model})`;
+const mapMethodPeopleToProps = (swapiService) => ({
+    getData:swapiService.getAllPeople
+})
+const mapMethodPlanetsToProps = (swapiService) => ({
+    getData:swapiService.getAllPlanets
+})
+const mapMethodStarshipsToProps = (swapiService) => ({
+    getData:swapiService.getAllStarships
+})
 
 
-const PeopleList = withListItemName(withData(ResourceList,getAllPeople),
-                                    renderName);
-const PlanetsList = withListItemName(withData(ResourceList,getAllPlanets),
-                                    renderName);
-const StarshipsList = withListItemName(withData(ResourceList,getAllStarships),
-                                    renderStarshipListItemName);
+const PeopleList = withSwapiService(
+                                    withListItemName(
+                                        withData(ResourceList),
+                                        renderName),
+                                    mapMethodPeopleToProps);
+const PlanetsList = withSwapiService(
+                                    withListItemName(
+                                        withData(ResourceList),
+                                        renderName),
+                                    mapMethodPlanetsToProps);
+const StarshipsList = withSwapiService(
+                                    withListItemName(
+                                        withData(ResourceList),
+                                        renderStarshipListItemName),
+                                    mapMethodStarshipsToProps);
 
 export {
     PeopleList,

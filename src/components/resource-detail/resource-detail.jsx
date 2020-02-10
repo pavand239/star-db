@@ -36,7 +36,7 @@ export class  ResourceDetail extends React.Component {
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.itemId !== this.props.itemId
-            && prevState.isLoading !== true) {
+            && !prevState.isLoading) {
                 this.setState({
                     isLoading:true,
                     item:null

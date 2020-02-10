@@ -60,7 +60,7 @@ export default class Content extends React.Component {
                         <Col md={8}>
                             <Jumbotron className='bg-dark rounded d-flex '>  
                                 {itemId===null?<h4>Select item from list</h4>:
-                                <PlanetDetail id={itemId} />}
+                                <PlanetDetail itemId={itemId} />}
                             </Jumbotron>
                     </Col>
                 </Row>
@@ -71,7 +71,7 @@ export default class Content extends React.Component {
                     <Col md={8}>
                         <Jumbotron className='bg-dark rounded d-flex '>  
                             {itemId===null?<h4>Select item from list</h4>:
-                            <PersonDetail id={itemId} />}
+                            <PersonDetail itemId={itemId} />}
                         </Jumbotron>
                     </Col>
                 </Row>
@@ -82,7 +82,7 @@ export default class Content extends React.Component {
                     <Col md={8}>
                         <Jumbotron className='bg-dark rounded d-flex '>  
                             {itemId===null?<h4>Select item from list</h4>:
-                            <StarshipDetail id={itemId} />}
+                            <StarshipDetail itemId={itemId} />}
                         </Jumbotron>
                     </Col>
                 </Row>

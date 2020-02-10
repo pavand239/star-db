@@ -2,11 +2,9 @@ import React from "react";
 import ResourceDetail, {Render} from "../resource-detail";
 import {withSwapiService} from "../hoc-helpers";
 
-const StarshipDetail = ({id,swapiService}) => {
-    let  {getStarship} = swapiService;
+const StarshipDetail = (props) => {
     return (
-        <ResourceDetail itemId={id}
-            getData={getStarship}>
+        <ResourceDetail {...props}>
             <Render field='model' label='Model' />
             <Render field='manufacturer' label='Manufacturer' />
             <Render field='cost' label='Cost' />
@@ -14,4 +12,8 @@ const StarshipDetail = ({id,swapiService}) => {
     )
 }
 
-export default withSwapiService(StarshipDetail);
+const mapMethodToProps = (swapiService) => ({
+    getData:swapiService.getStarship
+})
+
+export default withSwapiService(StarshipDetail, mapMethodToProps);

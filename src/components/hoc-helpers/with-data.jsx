@@ -21,7 +21,7 @@ export const withData = (View, getData) => {
             });
         }
         componentDidMount() {
-            getData().then(this.onDataLoaded).catch(this.onError);
+            this.props.getData().then(this.onDataLoaded).catch(this.onError);
         }
         render() {
             let {isLoading, error, data} = this.state
