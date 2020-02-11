@@ -79,7 +79,7 @@ export class  ResourceDetail extends React.Component {
             <ErrorBoundry>
                 <div className='d-flex'>
                     <img src={`${imageBaseUrl}${id}.jpg`}  
-                        className='rounded mr-lg-5 mr-3'  alt={name}/>
+                        className='rounded border border-secondary mr-lg-5 mr-3'  alt={name}/>
                     <div>
                         <h3>{name}</h3>
                         <table className='table table-hover'>
