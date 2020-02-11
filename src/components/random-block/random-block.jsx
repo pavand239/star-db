@@ -1,57 +1,31 @@
 import React from "react";
 import {Jumbotron} from "react-bootstrap";
-import Spinner from "../spinner";
-import ResourceDetail from "../resource-detail";
-import ErrorIndicator from "../error-indicator";
+import PlanetDetail from "../sw-components";
 import './random-block.css';
 
 export default class RandomBlock extends React.Component {
-    
     state = {
-        item:{},
-        isLoading:true,
-        error:false
-    }
-    componentDidCatch(){
-        this.onError();
+        itemId: Math.ceil(Math.random()*100%61)
     }
     componentDidMount() {
-        this.interval = setInterval(this.updateBlock,6000);
+        this.interval = setInterval(this.updateId,6000);
     }
     componentWillUnmount(){
         clearInterval(this.interval);
     }
-    onItemLoaded = (item) => {  //handler for update state after loading item
+    updateId = () => {
         this.setState({
-            item:item,
-            isLoading:false
-        });
-    }
-    onError = (err) => { //handler for Fetch error
-        this.setState({
-            error:true
-        });
-    }
-    updateBlock=()=> {
-        let id = Math.ceil(Math.random()*100%61),
-            {getData} = this.props;     
-        getData(id).then(this.onItemLoaded).catch(this.onError);
+            itemId:Math.ceil(Math.random()*100%61)
+        })
     }
 
 
     render() {
-        let {item, isLoading, error} = this.state,
-            {onClose} = this.props,
-            spinner = isLoading && !error?<Spinner />:null,
-            errorIndicator = error?<ErrorIndicator />:null,
-            planetContent = !isLoading && !error?<ResourceDetail item={item}/>:null;
         return (
             <Jumbotron bg='dark' className='d-flex my-3 justify-content-between'>
-               {spinner}
-               {errorIndicator}
-               {planetContent}
+                <PlanetDetail itemId={this.state.itemId} />
                 <button type="button" className="close align-self-start" 
-                    onClick={onClose}>
+                    onClick={this.props.onClose}>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </Jumbotron>

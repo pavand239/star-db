@@ -16,7 +16,7 @@ import {SwapiServiceProvider} from "../swapi-service-context";
 export default class StarDBApp extends React.Component {
     swapi=new SwapiService();
     state ={
-        showRandomBlock:false,
+        showRandomBlock:true,
     }
 
     handlerOnCloseRandomBlock = () => {
@@ -35,8 +35,7 @@ export default class StarDBApp extends React.Component {
                             <Header />
                             {showRandomBlock?
                                 <RandomBlock 
-                                    onClose={this.handlerOnCloseRandomBlock}
-                                    getData={this.swapi.getPlanet} />
+                                    onClose={this.handlerOnCloseRandomBlock} />
                                 :null}
                             <Switch>
                                 
