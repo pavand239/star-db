@@ -1,6 +1,6 @@
 import React from "react";
 import {Jumbotron} from "react-bootstrap";
-import PlanetDetail from "../sw-components";
+import {PlanetDetail} from "../sw-components";
 import './random-block.css';
 
 export default class RandomBlock extends React.Component {
