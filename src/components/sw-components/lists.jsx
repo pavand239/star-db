@@ -1,16 +1,12 @@
-import React from "react"
-
 import ResourceList from "../resource-list";
-import {withData, withSwapiService} from "../hoc-helpers";
+import {
+    withData, 
+    withSwapiService, 
+    withListItemName,
+    composer} from "../hoc-helpers";
 
 
-const withListItemName = (listItemNameRender) => (Wrapped) => (
-    (props) => (
-        <Wrapped {...props}>
-            {listItemNameRender}
-        </Wrapped>
-    )
-)
+
 
 const renderName=(item)=>`${item.name}`;
 const renderStarshipListItemName = (item)=>`${item.name} (${item.model})`;
@@ -25,15 +21,21 @@ const mapMethodStarshipsToProps = (swapiService) => ({
 })
 
 
-const PeopleList = withSwapiService(mapMethodPeopleToProps)(
-                        withListItemName(renderName)(
-                            withData(ResourceList)));
-const PlanetsList = withSwapiService(mapMethodPlanetsToProps)(
-                        withListItemName(renderName)(
-                            withData(ResourceList)));
-const StarshipsList = withSwapiService(mapMethodStarshipsToProps)(
-                        withListItemName(renderStarshipListItemName)(
-                            withData(ResourceList)));
+const PeopleList = composer(
+                            withSwapiService(mapMethodPeopleToProps),
+                            withListItemName(renderName),
+                            withData)
+                        (ResourceList);
+const PlanetsList = composer(
+                            withSwapiService(mapMethodPlanetsToProps),
+                            withListItemName(renderName),
+                            withData)
+                        (ResourceList);
+const StarshipsList = composer(
+                                withSwapiService(mapMethodStarshipsToProps),
+                                withListItemName(renderStarshipListItemName),
+                                withData)
+                            (ResourceList);
 
 export {
     PeopleList,
