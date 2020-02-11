@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import ErrorIndicator from "../error-indicator";
 import { Jumbotron } from "react-bootstrap";
 
@@ -10,6 +12,9 @@ export default class ErrorBoundry extends React.Component {
         this.setState({
             hasError:true
         });
+    }
+    static propTypes = {
+        children: PropTypes.node
     }
     render (){
         if (this.state.hasError){

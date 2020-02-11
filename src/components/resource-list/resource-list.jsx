@@ -1,6 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Card, ListGroup } from "react-bootstrap";
 import ErrorBoundry from "../error-boundry";
+
 
 export const ResourceList = ({data, children, onSelectItem}) => {
     let list = null,
@@ -20,4 +23,14 @@ export const ResourceList = ({data, children, onSelectItem}) => {
             </ErrorBoundry>
         </Card>
         )
+}
+
+ResourceList.defaultProps = {
+    onSelectItem: () => {}
+}
+
+ResourceList.propTypes = {
+    children: PropTypes.func.isRequired,
+    onSelectItem: PropTypes.func,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 }

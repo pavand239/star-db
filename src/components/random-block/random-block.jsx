@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Jumbotron} from "react-bootstrap";
 import {PlanetDetail} from "../sw-components";
 import './random-block.css';
@@ -6,6 +7,9 @@ import './random-block.css';
 export default class RandomBlock extends React.Component {
     state = {
         itemId: Math.ceil(Math.random()*100%61)
+    }
+    static propTypes = {
+        onClose: PropTypes.func.isRequired
     }
     componentDidMount() {
         this.interval = setInterval(this.updateId,6000);

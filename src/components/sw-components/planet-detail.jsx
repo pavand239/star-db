@@ -1,13 +1,13 @@
 import React from "react";
-import ResourceDetail, {Render} from "../resource-detail";
+import ResourceDetail, {Record} from "../resource-detail";
 import {withSwapiService} from "../hoc-helpers";
 
 const PlanetDetail = (props) => {
     return (
         <ResourceDetail {...props}>
-            <Render field='population' label='Population' />
-            <Render field='rotationPeriod' label='Rotation Period' />
-            <Render field='diameter' label='Diametet' />
+            <Record field='population' label='Population' />
+            <Record field='rotationPeriod' label='Rotation Period' />
+            <Record field='diameter' label='Diametet' />
         </ResourceDetail>
     )
 }

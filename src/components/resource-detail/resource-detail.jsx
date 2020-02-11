@@ -1,10 +1,10 @@
 import React from "react";
+
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 import ErrorBoundry from "../error-boundry";
 
-export const Render = (props) => {
-    let {item, field, label} = props;
+export const Record = ({item, field, label}) => {
     return(
         <tr>
             <th scope='row'>{label}</th>
@@ -13,6 +13,8 @@ export const Render = (props) => {
     )
 
 }
+
+
 export class  ResourceDetail extends React.Component { 
     state = {
         _isMount:false,
@@ -20,6 +22,7 @@ export class  ResourceDetail extends React.Component {
         isLoading:true,
         error:false
     }
+
     onDataLoaded = (data) => {
         if(this.state._isMount) {
             this.setState({
@@ -38,13 +41,14 @@ export class  ResourceDetail extends React.Component {
         this.props.getData(id).then(this.onDataLoaded).catch(this.onError);
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.itemId !== this.props.itemId){
+        let {itemId} = this.props; 
+        if (prevProps.itemId !== itemId){
             if (!prevState.isLoading) {
                 this.setState({
                     isLoading:true,
                 })
             }
-            this.updateItem(this.props.itemId);    
+            this.updateItem(itemId);    
         }
         
     }

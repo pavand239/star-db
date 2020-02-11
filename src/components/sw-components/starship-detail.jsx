@@ -1,13 +1,13 @@
 import React from "react";
-import ResourceDetail, {Render} from "../resource-detail";
+import ResourceDetail, {Record} from "../resource-detail";
 import {withSwapiService} from "../hoc-helpers";
 
 const StarshipDetail = (props) => {
     return (
         <ResourceDetail {...props}>
-            <Render field='model' label='Model' />
-            <Render field='manufacturer' label='Manufacturer' />
-            <Render field='cost' label='Cost' />
+            <Record field='model' label='Model' />
+            <Record field='manufacturer' label='Manufacturer' />
+            <Record field='cost' label='Cost' />
         </ResourceDetail>
     )
 }

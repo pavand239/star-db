@@ -1,3 +1,3 @@
-import {ResourceDetail , Render} from './resource-detail';
+import {ResourceDetail , Record} from './resource-detail';
 export default ResourceDetail;
-export {Render};
+export {Record};

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import {Col, Row, Jumbotron} from "react-bootstrap";
 
 export const Content = (props) => (
@@ -13,3 +15,8 @@ export const Content = (props) => (
         </Col>
     </Row>
 )
+
+Content.propType = {
+    list: PropTypes.node.isRequired,
+    detail: PropTypes.node
+}
