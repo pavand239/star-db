@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
@@ -15,84 +15,88 @@ export const Record = ({item, field, label}) => {
 }
 
 
-export class  ResourceDetail extends React.Component { 
-    state = {
-        _isMount:false,
-        item:null,
-        isLoading:true,
-        error:false
-    }
+export const  ResourceDetail = ({itemId, getData, children}) => { 
+    const [_isMount, setIsMount] = useState(false),
+          [item, setItem] = useState(1),
+          [isLoading, setIsLoading] = useState(true),
+          [isError, setIsError] = useState(false);
+    
 
-    onDataLoaded = (data) => {
-        if(this.state._isMount) {
-            this.setState({
-                item:data,
-                isLoading:false
-            });
+    const onDataLoaded = (data) => {
+        setItem(data);
+        setIsLoading(false);
+    }
+    const onError = (err) => {
+        setIsLoading(false);
+        setIsError(true);
+        console.log(err);
+    }
+    const updateItem = (id) => {
+        if(_isMount) {
+            setIsLoading(true);
+            setIsError(false);
+            getData(id).then(onDataLoaded).catch(onError);
+            console.log('update item');
         }
     }
-    onError = (err) => {
-        this.setState({
-            isLoading:false,
-            error:true
-        });
-    }
-    updateItem = (id) => {
-        this.props.getData(id).then(this.onDataLoaded).catch(this.onError);
-    }
-    componentDidUpdate(prevProps, prevState) {
-        let {itemId} = this.props; 
-        if (prevProps.itemId !== itemId){
-            if (!prevState.isLoading) {
-                this.setState({
-                    isLoading:true,
-                })
-            }
-            this.updateItem(itemId);    
-        }
+    useEffect(()=>{
+        setIsMount(true); console.log('mount');
+        return () => {setIsMount(false); console.log('unmount');}
+    },[]);
+    useEffect(()=>{
+        updateItem(itemId);
+        console.log('update');
+    }, [itemId]);
+    // componentDidUpdate(prevProps, prevState) {
+    //     let {itemId} = this.props; 
+    //     if (prevProps.itemId !== itemId){
+    //         if (!prevState.isLoading) {
+    //             this.setState({
+    //                 isLoading:true,
+    //             })
+    //         }
+    //         this.updateItem(itemId);    
+    //     }
         
+    // }
+    // componentDidMount() {
+    //     this.setState({
+    //         _isMount:true
+    //     });
+    // }
+    // componentWillUnmount() {
+    //     this.setState({
+    //         _isMount:false
+    //     });
+    // }
+
+    if (itemId===null) {
+        return <h4>Select item from list</h4>
     }
-    componentDidMount() {
-        this.setState({
-            _isMount:true
-        });
+    if (isLoading && !isError) {
+        return <Spinner />;
     }
-    componentWillUnmount() {
-        this.setState({
-            _isMount:false
-        });
+    if (isError) {
+        return <ErrorIndicator />
     }
-    render() {
-        let {isLoading, error, item} = this.state,
-            {itemId} = this.props;
-        if (itemId===null) {
-            return <h4>Select item from list</h4>
-        }
-        if (isLoading && !error) {
-            return <Spinner />;
-        }
-        if (error) {
-            return <ErrorIndicator />
-        }
-        let {id, name, imageBaseUrl} = item;
-        return(
-            <ErrorBoundry>
-                <div className='d-flex'>
-                    <img src={`${imageBaseUrl}${id}.jpg`}  
-                        className='rounded border border-secondary mr-lg-5 mr-3'  alt={name}/>
-                    <div>
-                        <h3>{name}</h3>
-                        <table className='table table-hover'>
-                            <tbody>
-                                {React.Children.map(this.props.children, (child)=>(
-                                    React.cloneElement(child, { item })
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+    let {id, name, imageBaseUrl} = item;
+    return(
+        <ErrorBoundry>
+            <div className='d-flex'>
+                <img src={`${imageBaseUrl}${id}.jpg`}  
+                    className='rounded border border-secondary mr-lg-5 mr-3'  alt={name}/>
+                <div>
+                    <h3>{name}</h3>
+                    <table className='table table-hover'>
+                        <tbody>
+                            {React.Children.map(children, (child)=>(
+                                React.cloneElement(child, { item })
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            </ErrorBoundry>
-            )
-    }
+            </div>
+        </ErrorBoundry>
+    )
 }
 
