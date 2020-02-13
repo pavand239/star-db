@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback} from "react";
 
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 import ErrorBoundry from "../error-boundry";
+import {useGetData} from "../hooks";
 
 export const Record = ({item, field, label}) => {
     return(
@@ -15,64 +16,15 @@ export const Record = ({item, field, label}) => {
 }
 
 
+
 export const  ResourceDetail = ({itemId, getData, children}) => { 
-    const [_isMount, setIsMount] = useState(false),
-          [item, setItem] = useState(1),
-          [isLoading, setIsLoading] = useState(true),
-          [isError, setIsError] = useState(false);
+    const useItem = () =>{
+        let getItem = useCallback(() => getData(itemId),[itemId]);
+        return useGetData(getItem);
+    }
     
+    let {item, isLoading, isError} = useItem();
 
-    const onDataLoaded = (data) => {
-        setItem(data);
-        setIsLoading(false);
-    }
-    const onError = (err) => {
-        setIsLoading(false);
-        setIsError(true);
-        console.log(err);
-    }
-    const updateItem = (id) => {
-        if(_isMount) {
-            setIsLoading(true);
-            setIsError(false);
-            getData(id).then(onDataLoaded).catch(onError);
-            console.log('update item');
-        }
-    }
-    useEffect(()=>{
-        setIsMount(true); console.log('mount');
-        return () => {setIsMount(false); console.log('unmount');}
-    },[]);
-    useEffect(()=>{
-        updateItem(itemId);
-        console.log('update');
-    }, [itemId]);
-    // componentDidUpdate(prevProps, prevState) {
-    //     let {itemId} = this.props; 
-    //     if (prevProps.itemId !== itemId){
-    //         if (!prevState.isLoading) {
-    //             this.setState({
-    //                 isLoading:true,
-    //             })
-    //         }
-    //         this.updateItem(itemId);    
-    //     }
-        
-    // }
-    // componentDidMount() {
-    //     this.setState({
-    //         _isMount:true
-    //     });
-    // }
-    // componentWillUnmount() {
-    //     this.setState({
-    //         _isMount:false
-    //     });
-    // }
-
-    if (itemId===null) {
-        return <h4>Select item from list</h4>
-    }
     if (isLoading && !isError) {
         return <Spinner />;
     }
