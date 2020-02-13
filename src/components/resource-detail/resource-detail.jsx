@@ -18,12 +18,12 @@ export const Record = ({item, field, label}) => {
 
 
 export const  ResourceDetail = ({itemId, getData, children}) => { 
-    const useItem = () =>{
+    const useGetItem = () =>{
         let getItem = useCallback(() => getData(itemId),[itemId]);
         return useGetData(getItem);
     }
     
-    let {item, isLoading, isError} = useItem();
+    let {item, isLoading, isError} = useGetItem();
 
     if (isLoading && !isError) {
         return <Spinner />;

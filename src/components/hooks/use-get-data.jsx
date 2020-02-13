@@ -2,18 +2,18 @@ import  { useState, useEffect, useMemo } from "react";
 
 export const useGetData = (getData) => {
     const initialState = useMemo(() => ({
-        item:null,
+        data:null,
         isLoading:true,
         isError:false
     }),[]);
     const [dataState, setDataState] = useState(initialState);
     const onLoaded = (data) => setDataState({
-                                                item:data,
+                                                data,
                                                 isLoading:false,
                                                 isError:false
                                             });
     const onError = (err) => setDataState({
-                                            item:null,
+                                            data:null,
                                             isLoading:false,
                                             isError:true
                                         });

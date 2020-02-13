@@ -1,37 +1,22 @@
-import React from "react";
+import React, { useCallback } from "react";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
+import { useGetData } from "../hooks";
 
 export const withData = (Wrapped) => {
-    return class extends React.Component {
-        state = {
-            data:null,
-            isLoading:true,
-            error:false
+    return (props) => {
+        const useGetList = () => {
+            let getList = useCallback(()=>props.getData(),[]);
+            return useGetData(getList);
         }
-        onDataLoaded = (data) => {
-            this.setState({
-                data:data,
-                isLoading:false
-            });
+        let {isLoading, isError, data} = useGetList();
+        console.log(data)
+        if (isLoading && !isError) {
+            return <Spinner />;
         }
-        onError = (err) => {
-            this.setState({
-                error:true
-            });
+        if (isError) {
+            return <ErrorIndicator />
         }
-        componentDidMount() {
-            this.props.getData().then(this.onDataLoaded).catch(this.onError);
-        }
-        render() {
-            let {isLoading, error, data} = this.state
-            if (isLoading && !error) {
-                return <Spinner />;
-            }
-            if (error) {
-                return <ErrorIndicator />
-            }
-            return <Wrapped {...this.props} data={data} />
-        }
+        return <Wrapped {...props} data={data} />
     }
 }
