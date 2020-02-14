@@ -50,6 +50,9 @@ export default class StarDBApp extends React.Component {
                                 <Route path='/starships/:id?'>
                                     <StarshipPage/>
                                 </Route>
+                                <Route>
+                                    <h2 className='m-5 text-center'>Page not found</h2>
+                                </Route>
                             </Switch>
                         </ErrorBoundry>
                     </Layout>
