@@ -5,6 +5,7 @@ import Spinner from "../spinner";
 import ErrorBoundry from "../error-boundry";
 import {useGetData} from "../hooks";
 
+
 export const Record = ({item, field, label}) => {
     return(
         <tr>
@@ -22,8 +23,7 @@ export const  ResourceDetail = ({itemId, getData, children}) => {
         let getItem = useCallback(() => getData(itemId),[itemId]);
         return useGetData(getItem);
     }
-    
-    let {item, isLoading, isError} = useGetItem();
+    let {data:item, isLoading, isError} = useGetItem();
 
     if (isLoading && !isError) {
         return <Spinner />;

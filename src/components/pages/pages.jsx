@@ -6,19 +6,16 @@ import {
     StarshipsList,
     StarshipDetail
     } from '../sw-components';
-import {withItemId, withContentWrap} from "../hoc-helpers"
+import { withContentWrap} from "../hoc-helpers"
 
-const PeoplePage = withItemId(
-                        withContentWrap(PeopleList, 
-                                        PersonDetail));
+const PeoplePage = withContentWrap(PeopleList, 
+                                    PersonDetail);
   
-const PlanetPage = withItemId(
-                        withContentWrap(PlanetsList, 
-                                        PlanetDetail));
+const PlanetPage = withContentWrap(PlanetsList, 
+                                    PlanetDetail);
 
-const StarshipPage = withItemId(
-                        withContentWrap(StarshipsList, 
-                                        StarshipDetail));                                       
+const StarshipPage = withContentWrap(StarshipsList, 
+                                        StarshipDetail);                                       
 
 export {
     PeoplePage,

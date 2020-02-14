@@ -10,7 +10,6 @@ export const withData = (Wrapped) => {
             return useGetData(getList);
         }
         let {isLoading, isError, data} = useGetList();
-        console.log(data)
         if (isLoading && !isError) {
             return <Spinner />;
         }

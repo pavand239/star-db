@@ -9,6 +9,7 @@ import {
     StarshipPage } from "../pages"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service"
 import SwapiServiceContext from "../swapi-service-context";
 
 
@@ -33,19 +34,20 @@ export default class StarDBApp extends React.Component {
                     <Layout>
                         <ErrorBoundry>
                             <Header />
-                            {showRandomBlock?
-                                <RandomBlock 
-                                    onClose={this.handlerOnCloseRandomBlock} />
-                                :null}
                             <Switch>
-                                
                                 <Route exact path='/'>
+                                    {showRandomBlock?
+                                        <RandomBlock 
+                                            onClose={this.handlerOnCloseRandomBlock} />
+                                    :null}
+                                </Route>
+                                <Route path='/people'>
                                     <PeoplePage />
                                 </Route>
-                                <Route exact path='/planets'>
+                                <Route path='/planets'>
                                     <PlanetPage />
                                 </Route>
-                                <Route exact path='/starships'>
+                                <Route path='/starships'>
                                     <StarshipPage/>
                                 </Route>
                             </Switch>
