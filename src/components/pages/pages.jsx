@@ -6,7 +6,7 @@ import {
     StarshipsList,
     StarshipDetail
     } from '../sw-components';
-import { withContentWrap} from "../hoc-helpers"
+import { withContentWrap} from "../hoc-helpers";
 
 const PeoplePage = withContentWrap(PeopleList, 
                                     PersonDetail);

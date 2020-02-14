@@ -41,13 +41,13 @@ export default class StarDBApp extends React.Component {
                                             onClose={this.handlerOnCloseRandomBlock} />
                                     :null}
                                 </Route>
-                                <Route path='/people'>
+                                <Route path='/people/:id?'>
                                     <PeoplePage />
                                 </Route>
-                                <Route path='/planets'>
+                                <Route path='/planets/:id?'>
                                     <PlanetPage />
                                 </Route>
-                                <Route path='/starships'>
+                                <Route path='/starships/:id?'>
                                     <StarshipPage/>
                                 </Route>
                             </Switch>

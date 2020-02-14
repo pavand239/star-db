@@ -1,26 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Card, ListGroup } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 import ErrorBoundry from "../error-boundry";
 
 import "./resource-list.css"
 
 
-export const ResourceList = ({data, children, url, itemId}) => {
+const ResourceList = ({data, children, match, onSelectItem}) => {
     let list = null,
         listItems = data.map((item) => {
             return (
-                
-                    <Link to={`${url}/${item.id}`}
-                          className='text-white'>
-                        <ListGroup.Item className={itemId===item.id?'active':''} 
-                                        key={item.id} >
-                            {children(item)}
-                        </ListGroup.Item>
-                    </Link>
-            )});
+                <ListGroup.Item className={match.params.id===item.id?'active':''} 
+                                key={item.id} 
+                                onClick={()=>{onSelectItem(item.id)}}>
+                    {children(item)}
+                </ListGroup.Item>
+        )});
     list = <ListGroup>{listItems}</ListGroup>;
     return (
         <Card className='bg-dark rounded mb-3'>
@@ -40,3 +37,5 @@ ResourceList.propTypes = {
     onSelectItem: PropTypes.func,
     data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
+
+export default withRouter(ResourceList);

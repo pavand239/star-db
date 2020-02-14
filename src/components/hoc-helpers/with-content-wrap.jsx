@@ -1,29 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import Content from "../content";
 
-import {Switch, Route, useRouteMatch} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
-export const withContentWrap = (List, Detail) => () => {
-    const [itemId, setItemId] = useState(null);
-    let {url, path} = useRouteMatch();
+export const withContentWrap = (List, Detail) => withRouter(({match, history}) => {
+    let {id} = match.params;
     return(
         <Content
-            list={<List url={url}
-                        itemId={itemId}/>} 
-            detail={
-                <Switch>
-                    <Route exact path={path}>
-                        <h4>Select item from list</h4>
-                    </Route>
-                    <Route path={`${path}/:id`}
-                        component = {({match}) => {
-                            const {id} = match.params;
-                            setItemId(id) 
-                            return <Detail itemId={id} />;
-                        }}
-                    />
-                </Switch> 
-            }
+            list={<List onSelectItem={(id)=>{history.push(id)}}/>} 
+            detail={id?<Detail itemId={id} />:
+                       <h3>Select item from list</h3>}
         />
     )
-} 
+} )
