@@ -1,0 +1,6 @@
+a {
+    border-radius: 0.25rem;
+}
+a:hover {
+    text-decoration: none;
+}

@@ -1,19 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { Card, ListGroup } from "react-bootstrap";
+import {Link} from "react-router-dom";
+
 import ErrorBoundry from "../error-boundry";
 
+import "./resource-list.css"
 
-export const ResourceList = ({data, children, onSelectItem}) => {
+
+export const ResourceList = ({data, children, url, itemId}) => {
     let list = null,
         listItems = data.map((item) => {
             return (
-                <ListGroup.Item 
-                    key = {item.id}
-                    onClick = {()=>{onSelectItem(item.id)}}>
-                    {children(item)}
-                </ListGroup.Item>
+                
+                    <Link to={`${url}/${item.id}`}
+                          className='text-white'>
+                        <ListGroup.Item className={itemId===item.id?'active':''} 
+                                        key={item.id} >
+                            {children(item)}
+                        </ListGroup.Item>
+                    </Link>
             )});
     list = <ListGroup>{listItems}</ListGroup>;
     return (
