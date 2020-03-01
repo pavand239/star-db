@@ -1,4 +1,13 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# StarDB
+
+App to work with API swapi.co on React
+
+## Screenshots
+![Screenshot 1](screenshots/screenshot1.png "Screenshot 1")
+
+![Screenshot 2](screenshots/screenshot2.png "Screenshot 2")
+
+![Screenshot 3](screenshots/screenshot3.png "Screenshot 3")
 
 ## Available Scripts
 
